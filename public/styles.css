@@ -1,0 +1,79 @@
+#sidebar {
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #343a40;
+  color: white;
+  padding-top: 60px; /* to account for the fixed navbar */
+}
+#sidebar .nav-link {
+  color: white;
+}
+#sidebar .nav-link:hover {
+  background: #495057;
+}
+.content {
+  margin-left: 250px; /* Match the sidebar width */
+  margin-top: 70px; /* Add margin to avoid overlap with navbar */
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+  z-index: 2;
+}
+
+.logo-container img {
+  width: 220px;
+  height: 220px;
+  cursor: pointer;
+  transition: transform 0.8s ease;
+  z-index: 3;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 10;
+  display: none;
+}
+
+.background .overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}

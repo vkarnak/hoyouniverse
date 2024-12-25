@@ -1,0 +1,31 @@
+#sidebar {
+  height: 100vh;
+  width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #343a40;
+  color: white;
+  padding-top: 60px; /* to account for the fixed navbar */
+}
+#sidebar .nav-link {
+  color: white;
+}
+#sidebar .nav-link:hover {
+  background: #495057;
+}
+.content {
+  margin-left: 150px; /* Match the sidebar width */
+  margin-top: 70px; /* Add margin to avoid overlap with navbar */
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.guide{
+  width: 768px; 
+  height: 614px;
+}
