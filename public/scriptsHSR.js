@@ -2,11 +2,6 @@ function changeContent(section) {
   const content = document.getElementById("main-content");
 
   switch (section) {
-    case "Dashboard":
-      content.innerHTML =
-        "<h1>Dashboard</h1><p>Here is the dashboard content.</p>";
-      break;
-
     case "Plot":
       content.innerHTML = /*html*/ `
         <h1>Plot</h1>
@@ -26,8 +21,48 @@ function changeContent(section) {
           the Trailblazer departs with the Astral Express crew.</p>`;
       break;
 
-    case "Planets":
-      content.innerHTML = "<h1>Planets</h1><p></p>";
+    case "Locations":
+      content.innerHTML = `
+          <h1>Locations</h1>
+          <p>Explore the different locations in Space, each with its unique culture and mysteries.</p>
+          <div class="locations">
+          <button class="location-btn" data-location="Herta Space Station"><img src="Herta Space Station.png" class="location-image"></button>          
+          <button class="location-btn" data-location="Jarilo-VI"><img src="Jarilo-VI.png" class="location-image"></button>
+          <button class="location-btn" data-location="Xianzhou Luofu"><img src="Xianzhou Luofu.png" class="location-image"></button>
+          <button class="location-btn" data-location="Penacony"><img src="Penacony.png" class="location-image"></button>
+          </div>
+          <div id="location-content" class="location-content"></div>
+        `;
+
+      // Attach click event for each location button
+      const locationButtons = document.querySelectorAll(".location-btn");
+      locationButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const location = this.dataset.location; // Using 'data-location' for location data
+
+          let locationText = "";
+          if (location === "Herta Space Station") {
+            locationText =
+              "<h3>Herta Space Station</h3><p>Herta Space Station is a space station founded by Herta, member #83 of the Genius Society. Researchers from different planets comes to work here as a researcher and most of them are faithful followers of Herta. Qualifying for a researcher role in the Herta Space Station is a hard process and is a cherished goal of the scientific community.</p>";
+          } else if (location === "Jarilo-VI") {
+            locationText =
+              "<h3>Jarilo-VI</h3><p>Jarilo-VI is a planet that is frosted over due to the Eternal Freeze as a product of the Stellaron's effect on the planet. Its name may possibly be a mistranslation that has a poetry stanza number. Belobog currently stands as its only bastion where humanity thrives amidst the harsh climate.</p>";
+          } else if (location === "Xianzhou Luofu") {
+            locationText =
+              "<h3>The Xianzhou Luofu</h3><p>The Xianzhou Luofu is one of the six Flagships owned by the Hexafleet of the Xianzhou Alliance. It sails like a one-way arrow through the galaxy, with the goal of eradicating Denizens of Abundance. The Luofu stands out among the other ships for its medical treatment and trade. People on the Luofu are considered laid-back compared to other ships.</p>";
+          } else if (location === "Penacony") {
+            locationText =
+              "<h3>Penacony</h3><p>Penacony, also known as the 'Planet of Festivities', is a planet currently administered by The Family in the Asdana star system.</p>";
+          }
+
+          // Update the content of the location content area
+          const locationContent = document.getElementById("location-content");
+          locationContent.innerHTML = locationText;
+
+          // Slide the region content in or out
+          $(locationContent).stop(true, true).slideToggle(); // stop any ongoing animations and toggle visibility
+        });
+      });
       break;
 
     case "Characters":
@@ -78,23 +113,38 @@ function changeContent(section) {
 
 function renderCharacterGrid(data) {
   const grid = document.getElementById("character-grid");
-  let characterGrid = "";
+  grid.innerHTML = "";
 
-  data.forEach((character) => {
-    characterGrid += `
-      <div class="col-6 col-md-3 mb-4">
-          <div class="character-card">
-            <img src="/images/characters/${character.name}.png" alt="${character.name}" class="img-fluid">
-            <div class="character-info">
-              <img src="/images/elements/${character.element}.png" alt="${character.element}" class="img-fluid">
-              <img src="/images/path/${character.path}.png" alt="${character.path}" class="img-fluid">
-              <img src="/images/stars/${character.stars}.png" alt="${character.stars}" class="img-fluid">
+  const characterHTML = data
+    .map((character) => {
+      return /*html*/ `
+      <div class="col-6 col-md-3 mb-4"
+              data-bs-toggle="popover"
+              data-bs-placement="auto" 
+              data-bs-boundary="window" 
+              data-bs-trigger="hover focus"
+              title="${character.name}"
+              data-bs-content="<img src='/images/guides/${character.name}.png' >">
+                          <div class="character-info">
+              <img src="/images/characters/${character.name}.png" alt="${character.name}" class="img-fluid">
+              <img src="/images/stars/${character.stars}.png" alt="${character.stars}" class="img-fluid"><br>
+              <img src="/images/elements/${character.element}.png" alt="${character.element}" class="img-fluid" style="width: 50px; height: 50px; object-fit: cover;">
+              <img src="/images/path/${character.path}.png" alt="${character.path}" class="img-fluid" style="width: 50px; height: 50px; object-fit: cover;">
             </div>
-          </div>
       </div>`;
-  });
+    })
+    .join("");
+  grid.innerHTML = characterHTML;
 
-  grid.innerHTML = characterGrid;
+  var popoverTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="popover"]'
+  );
+  popoverTriggerList.forEach((popoverTrigger) => {
+    new bootstrap.Popover(popoverTrigger, {
+      html: true,
+      fallbackPlacements: ["top", "left", "right", "bottom"],
+    });
+  });
 }
 
 function applyFilters() {
